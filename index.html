@@ -130,7 +130,6 @@
 <body>
     <div class="container">
         <header>
-            <h1>Hello Everyone, I am Pratyush</h1>
             <h1>🦴 Appendicular Skeletal System</h1>
             <p>Interactive 3D Anatomy Explorer</p>
         </header>
@@ -153,8 +152,9 @@
                      Example absolute path: c:\\Users\\paula\\Desktop\\bunty\\model\\introduction_diagram.png -->
                 <div id="visuals" style="display:flex; width:100%; height:100%;">
                     <div id="model-area" style="width:50%; height:100%; position:relative; background:#f8f9fa;"></div>
-                    <div id="diagram-area" style="width:50%; height:100%; display:flex; align-items:center; justify-content:center; background:#ffffff;">
-                        <img id="content-diagram" alt="Diagram" style="display:none; width:100%; height:100%; object-fit:contain;" />
+                    <div id="diagram-area" style="width:50%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; background:#ffffff; overflow-y:auto; padding:10px;">
+                        <img id="content-diagram" alt="Diagram" style="display:none; width:95%; height:auto; object-fit:contain; margin:5px 0;" />
+                        <img id="content-diagram-2" alt="Diagram 2" style="display:none; width:95%; height:auto; object-fit:contain; margin:5px 0;" />
                     </div>
                 </div>
             </div>
@@ -166,99 +166,459 @@
 
                 <!-- Introduction info (text for the 3D model view) -->
                 <div class="section-content active" id="introduction-info">
-                    <h2>Introduction — 3D Model</h2>
-                    <p>This view shows the full 3D model. Use the mouse to rotate, zoom and pan. Other tabs display related images or text.</p>
+                    <h2>Skeletal System</h2>
+
+<p>
+The skeletal system includes all the bones and joints in the body.  
+It forms the inner structure that provides support, protection, posture, and shape to the body.
+</p>
+
+<hr>
+
+<h3>Parts of the Skeletal System</h3>
+<ul>
+    <li><strong>Bones (Skeleton)</strong></li>
+    <li><strong>Joints</strong></li>
+    <li><strong>Cartilage</strong></li>
+    <li><strong>Ligaments</strong> – connect bone to bone</li>
+    <li><strong>Tendons</strong> – connect bone to muscle</li>
+</ul>
+
+<hr>
+
+<h3>Skeleton</h3>
+<p>The adult human skeleton usually consists of <strong>206 bones</strong>.  
+These bones are grouped into two divisions:</p>
+
+<h4>1. Axial Skeleton</h4>
+<ul>
+    <li>Lies along the central axis of the body.</li>
+    <li>Consists of <strong>80 bones</strong>.</li>
+    <li>Includes:
+        <ul>
+            <li>Head (Skull)</li>
+            <li>Vertebral Column</li>
+            <li>Ribs</li>
+            <li>Sternum</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>2. Appendicular Skeleton</h4>
+<p>
+“Appendicular” refers to limbs or appendages.  
+This division contains <strong>126 bones</strong> and includes the free limbs and their attachments (girdles).
+</p>
+
+<h5>Parts of the Appendicular Skeleton</h5>
+<ul>
+    <li>Pectoral Girdle</li>
+    <li>Upper Limb (Hand)</li>
+    <li>Pelvic Girdle</li>
+    <li>Lower Limb (Leg)</li>
+</ul>
+
+<hr>
+
+<h3>Descriptive / Key Terms</h3>
+<ul>
+    <li><strong>Appendage:</strong> A limb.</li>
+    <li><strong>Articulation:</strong> The point where two bones meet.</li>
+    <li><strong>Foramen:</strong> An opening or hole in a bone.</li>
+    <li><strong>Process:</strong> A projection or outward extension of a bone.</li>
+</ul>
+
+<hr>
+
+<h3>Bones of Each Limb (30 Bones Each)</h3>
+
+<h4>Upper Limb (Forelimb)</h4>
+<ul>
+    <li>Humerus – 1</li>
+    <li>Radius – 1</li>
+    <li>Ulna – 1</li>
+    <li>Carpals (Wrist Bones) – 8</li>
+    <li>Metacarpals (Palm Bones) – 5</li>
+    <li>Phalanges (Digits) – 14</li>
+</ul>
+
+<h4>Lower Limb (Hind Limb)</h4>
+<ul>
+    <li>Femur (Thigh Bone, longest bone) – 1</li>
+    <li>Tibia – 1</li>
+    <li>Fibula – 1</li>
+    <li>Patella (Knee Cap) – 1</li>
+    <li>Tarsals (Ankle Bones) – 7</li>
+    <li>Metatarsals – 5</li>
+    <li>Phalanges (Digits) – 14</li>
+</ul>
+
                 </div>
 
                 <!-- Pectoral Girdle (Image-only) -->
                 <div class="section-content" id="pectoral-girdle-info">
-                    <h2>Pectoral Girdle</h2>
-                    <p>The pectoral (shoulder) girdle connects the upper limb to the trunk and allows a wide range of motion.</p>
+                    <h2>Pectoral Girdle (Shoulder Girdle)</h2>
+
+                            <p>
+                            Girdles are the attachments that connect our appendicular skeleton system to the axial skeleton.  
+                            The pectoral (shoulder) girdle consists of two bones:
+                            </p>
+
+                            <ul>
+                                <li>Scapula</li>
+                                <li>Clavicle</li>
+                            </ul>
+
+                            <hr>
+
+                            <h3>1. Scapula</h3>
+                            <ul>
+                                <li>It is a flat, triangular bone, also called the shoulder blade.</li>
+                                <li>It consists of two bony processes:
+                                    <ul>
+                                        <li><strong>Acromion Process</strong></li>
+                                        <li><strong>Coracoid Process</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h4>Acromion Process</h4>
+                            <ul>
+                                <li>Articulates with the clavicle.</li>
+                            </ul>
+
+                            <h4>Coracoid Process</h4>
+                            <ul>
+                                <li>A small hook-like structure attached to the anterior part of the scapula.</li>
+                                <li>Along with the acromion, it helps stabilize the shoulder joint.</li>
+                            </ul>
+
+                            <h4>Acromioclavicular Joint</h4>
+                            <ul>
+                                <li>The joint connecting the scapula with the clavicle.</li>
+                            </ul>
+
+                            <h4>Glenoid Cavity (Glenohumeral Joint)</h4>
+                            <ul>
+                                <li>The humerus connects with the scapula through the glenoid cavity.</li>
+                            </ul>
+
+                            <hr>
+
+                            <h3>2. Clavicle (Collar Bone)</h3>
+                            <ul>
+                                <li>An elongated S-shaped bone.</li>
+                                <li>Extends between the sternum and the acromion of the scapula.</li>
+                            </ul>
+
+                            <h4>Sternoclavicular Joint</h4>
+                            <ul>
+                                <li>The joint that attaches the clavicle to the sternum.</li>
+                            </ul>
+
+                            <hr>
+
+                            <h3>Functions of the Pectoral Girdle</h3>
+                            <ul>
+                                <li>Supports the upper limb.</li>
+                                <li>Provides attachment for muscles.</li>
+                                <li>Forms the shoulder.</li>
+                                <li>Clavicle attaches the axial skeleton to the appendicular skeleton.</li>
+                            </ul>
+
                 </div>
                 <!-- Upper Limb (Image-only) -->
                 <div class="section-content" id="upper-limb-info">
-                    <h2>Upper Limb</h2>
-                    <p>The upper limb provides mobility and dexterity for manipulation and interaction with the environment.</p>
+                    <h2>Upper Limb Bones </h2>
+
+<hr>
+
+<h3>1) Radius</h3>
+<p>
+The radius is the lateral bone of the forearm, located on the thumb side.  
+It enables wrist rotation and fine hand movements such as turning a key or flipping a page, making it essential for dexterity and control.
+</p>
+
+<hr>
+
+<h3>2) Ulna</h3>
+<p>
+The ulna lies on the little finger side of the forearm.  
+It forms the elbow joint and provides stability during arm movements, especially while lifting or pushing.
+</p>
+
+<hr>
+
+<h3>3) Carpals</h3>
+<p>
+These are eight small bones arranged in two rows at the wrist.  
+They form the base of the hand and allow various wrist motions including flexion, extension, and rotation, such as waving or writing.
+</p>
+
+<hr>
+
+<h3>4) Metacarpals</h3>
+<p>
+Five long bones that form the palm.  
+They connect the wrist to the fingers and create the framework for gripping, holding, and expressive hand gestures like clapping or pointing.
+</p>
+
+<hr>
+
+<h3>5) Phalanges</h3>
+<p>
+These are the finger bones—14 in total per hand.  
+Each finger has three phalanges (proximal, middle, distal), except the thumb, which has two.  
+They enable precise actions such as typing, grasping, and touching.
+</p>
+
                 </div>
 
                 <!-- Pelvic Girdle (Image-only) -->
                 <div class="section-content" id="pelvic-girdle-info">
                     <h2>Pelvic Girdle</h2>
-                    <p>Pelvic Girdle
-Connects axial skeleton to lower limbs; supports body weight, aids locomotion, and protects pelvic organs.
 
-Shows male–female anatomical differences related to function and movement.
+                        <p>
+                        Connects the axial skeleton to the lower limbs; supports body weight, aids locomotion, and protects pelvic organs.  
+                        Shows male–female anatomical differences related to function and movement.
+                        </p>
 
-Hip Bone (Coxal Bone): Formed by fusion of ilium, ischium, and pubis.
-Supports abdominal–pelvic organs and provides muscle attachment.
+                        <hr>
 
-Sacral Connection: Ilium articulates with sacrum at sacroiliac joint.
-Transfers upper-body weight; stabilized by strong ligaments.
+                        <h3>Hip Bone (Coxal Bone)</h3>
+                        <ul>
+                            <li>Formed by the fusion of the ilium, ischium, and pubis.</li>
+                            <li>Supports abdominal–pelvic organs and provides muscle attachment.</li>
+                        </ul>
 
-Ilium: Largest, superior part with iliac crest, ASIS, and iliac fossa.
-Supports trunk weight; major muscle-attachment area.
+                        <h4>Sacral Connection</h4>
+                        <ul>
+                            <li>Ilium articulates with the sacrum at the sacroiliac joint.</li>
+                            <li>Transfers upper-body weight; stabilized by strong ligaments.</li>
+                        </ul>
 
-Ischium: Posteroinferior region with ischial tuberosity (“sitting bone”).
-Anchors hamstrings and bears body weight when sitting.
+                        <hr>
 
-Pubis: Anterior part; forms part of the obturator foramen.
-Supports pelvic organs and anchors thigh muscles.
+                        <h3>Parts of the Hip Bone</h3>
 
-Pubic Symphysis: Fibrocartilaginous joint between pubic bones.
-Allows slight movement and widens during childbirth.
+                        <h4>Ilium</h4>
+                        <ul>
+                            <li>Largest and superior part of the hip bone.</li>
+                            <li>Includes iliac crest, ASIS (Anterior Superior Iliac Spine), and iliac fossa.</li>
+                            <li>Supports trunk weight and provides major muscle attachments.</li>
+                        </ul>
 
-Acetabulum: Deep socket formed by ilium, ischium, and pubis.
-Articulates with femoral head; transfers weight to lower limbs.
+                        <h4>Ischium</h4>
+                        <ul>
+                            <li>Posteroinferior region of the hip bone.</li>
+                            <li>Contains the ischial tuberosity (“sitting bone”).</li>
+                            <li>Anchors hamstrings and bears body weight while sitting.</li>
+                        </ul>
 
-Obturator Foramen: Large opening between pubis and ischium.
-Allows neurovascular passage; reduces bone mass while maintaining strength.
+                        <h4>Pubis</h4>
+                        <ul>
+                            <li>Anterior part of the hip bone.</li>
+                            <li>Forms part of the obturator foramen.</li>
+                            <li>Supports pelvic organs and anchors thigh muscles.</li>
+                        </ul>
 
-Female Pelvis:
-Wider and shallower
-Larger pelvic inlet and outlet
-Broader pubic arch (≥90°)
-Adapted for childbirth
+                        <h4>Pubic Symphysis</h4>
+                        <ul>
+                            <li>Fibrocartilaginous joint between the left and right pubic bones.</li>
+                            <li>Allows slight movement and widens during childbirth.</li>
+                        </ul>
 
-Male Pelvis:
-Narrower, heavier, and deeper
-Smaller and heart-shaped pelvic inlet
-Pubic arch <90°>
-Adapted for strength and load-bearing</p>
+                        <hr>
+
+                        <h3>Important Structures</h3>
+
+                        <h4>Acetabulum</h4>
+                        <ul>
+                            <li>A deep socket formed by the ilium, ischium, and pubis.</li>
+                            <li>Articulates with the head of the femur.</li>
+                            <li>Transfers upper-body weight to the lower limbs.</li>
+                        </ul>
+
+                        <h4>Obturator Foramen</h4>
+                        <ul>
+                            <li>Large opening between the pubis and ischium.</li>
+                            <li>Allows passage of nerves and blood vessels.</li>
+                            <li>Reduces bone mass while maintaining strength.</li>
+                        </ul>
+
+                        <hr>
+
+                        <h3>Female Pelvis</h3>
+                        <ul>
+                            <li>Wider and shallower.</li>
+                            <li>Larger pelvic inlet and outlet.</li>
+                            <li>Broader pubic arch (≥ 90°).</li>
+                            <li>Adapted for childbirth.</li>
+                        </ul>
+
+                        <h3>Male Pelvis</h3>
+                        <ul>
+                            <li>Narrower, heavier, and deeper.</li>
+                            <li>Smaller and heart-shaped pelvic inlet.</li>
+                            <li>Pubic arch &lt; 90°.</li>
+                            <li>Adapted for strength and load-bearing.</li>
+                        </ul>
                 </div>
 
                 <!-- Lower Limb (Image-only) -->
                 <div class="section-content" id="lower-limb-info">
-                    <h2>Lower Limb</h2>
-                    <p>Primary functions: Supporting the body's weight and locomotion 2. Skeletal system
-                            Overview: 
-                            The lower limbs contain 60 bones in total, including the pelvis, femur, patella, tibia, fibula, and the bones of the foot.
-                            Pelvis: Formed by the hip bones, sacrum, and coccyx.
-                            Femur: The longest and strongest bone in the body, located in the thigh.
-                            Leg: Contains the tibia (medial, weight-bearing) and fibula (lateral).
-                            Patella: The kneecap, is a sesamoid bone that helps in protecting the knee joint.
-                            Foot: Consists of tarsals (7), metatarsals (5), and phalanges (14). 3. Joints
-                            Hip joint 
-                            It is a ball-and-socket synovial joint that connects the lower limb to the axial skeleton, supported by a joint capsule, ligaments, and muscles. 
-                            Knee Joint: The knee is the largest joint in the body, acting primarily as a hinge joint to allow for leg extension and flexion, with limited side-to-side movement
-                            Ankle Joint: Formed by the tibia, fibula, and talus (a tarsal bone). 
-                            4. Muscular system
-                            Compartments: Muscles are organized into anterior and posterior compartments in both the thigh and leg.
-                            Key muscles: Include the gluteus maximus, quadriceps, hamstrings, gastrocnemius, and tibialis anterior.</p>
+                    <h2>Primary Functions of Lower limb</h2>
+                        <ul>
+                            <li>Supporting the body's weight</li>
+                            <li>Locomotion (movement)</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>2. Skeletal System</h2>
+
+                        <h3>Overview</h3>
+                        <ul>
+                            <li>The lower limbs contain <strong>60 bones</strong> in total.</li>
+                            <li>Includes: pelvis, femur, patella, tibia, fibula, and foot bones.</li>
+                        </ul>
+
+                        <h3>Pelvis</h3>
+                        <ul>
+                            <li>Formed by the hip bones, sacrum, and coccyx.</li>
+                        </ul>
+
+                        <h3>Femur</h3>
+                        <ul>
+                            <li>The longest and strongest bone in the body.</li>
+                            <li>Located in the thigh.</li>
+                        </ul>
+
+                        <h3>Leg Bones</h3>
+                        <ul>
+                            <li><strong>Tibia:</strong> Medial, weight-bearing bone.</li>
+                            <li><strong>Fibula:</strong> Lateral, slender bone.</li>
+                        </ul>
+
+                        <h3>Patella</h3>
+                        <ul>
+                            <li>Kneecap; a sesamoid bone.</li>
+                            <li>Protects the knee joint.</li>
+                        </ul>
+
+                        <h3>Foot</h3>
+                        <ul>
+                            <li><strong>Tarsals:</strong> 7 bones</li>
+                            <li><strong>Metatarsals:</strong> 5 bones</li>
+                            <li><strong>Phalanges:</strong> 14 bones</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>3. Joints</h2>
+
+                        <h3>Hip Joint</h3>
+                        <ul>
+                            <li>A ball-and-socket synovial joint.</li>
+                            <li>Connects the lower limb to the axial skeleton.</li>
+                            <li>Supported by a joint capsule, ligaments, and muscles.</li>
+                        </ul>
+
+                        <h3>Knee Joint</h3>
+                        <ul>
+                            <li>The largest joint in the body.</li>
+                            <li>Acts primarily as a hinge joint for flexion and extension.</li>
+                            <li>Allows limited side-to-side movement.</li>
+                        </ul>
+
+                        <h3>Ankle Joint</h3>
+                        <ul>
+                            <li>Formed by the tibia, fibula, and talus (a tarsal bone).</li>
+                        </ul>
+
+                        <hr>
+
+                        <h2>4. Muscular System</h2>
+
+                        <h3>Compartments</h3>
+                        <ul>
+                            <li>Muscles are organized into anterior and posterior compartments in both the thigh and leg.</li>
+                        </ul>
+
+                        <h3>Key Muscles</h3>
+                        <ul>
+                            <li>Gluteus maximus</li>
+                            <li>Quadriceps</li>
+                            <li>Hamstrings</li>
+                            <li>Gastrocnemius</li>
+                            <li>Tibialis anterior</li>
+                        </ul>
+
+               
                 </div>
 
                 <!-- Relevance in health care (text-only) -->
                 <div class="section-content" id="relevance-info">
                     <div class="relevance-box" style="background:#fff; padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08);">
-                    <h2>Relevance in Health Care</h2>
-                    <p>The skeletal system (and each of its parts) has direct clinical relevance across many areas of health care. Here are a few examples and considerations:</p>
-                    <ul>
-                        <li><strong>Orthopedics:</strong> Diagnosis and treatment of fractures, deformities, degenerative diseases, and traumatic injuries.</li>
-                        <li><strong>Rehabilitation:</strong> Restoration of function after injury or surgery via physiotherapy and occupational therapy.</li>
-                        <li><strong>Imaging:</strong> Radiography, CT, and MRI are essential tools for assessing bone integrity and planning interventions.</li>
-                        <li><strong>Surgical Planning:</strong> 3D models and imaging improve preoperative planning and patient education.</li>
-                        <li><strong>Education:</strong> Anatomical models (2D images, 3D models) are vital for training clinicians and students.</li>
-                    </ul>
-                    <p>This section intentionally contains only text (no images or 3D models) as requested.</p>
+                    <h2>Relevance of Studying the Appendicular Skeleton System in Healthcare</h2>
+
+<hr>
+
+<h3>1. Introduction</h3>
+<p>
+The appendicular skeleton includes the limbs (upper and lower), shoulder girdle, and pelvic girdle.  
+It enables movement, mobility, and interaction with the environment.  
+Understanding its structure and function is crucial for healthcare professionals.
+</p>
+
+<hr>
+
+<h3>2. Clinical Relevance</h3>
+<ul>
+    <li><strong>Injury Assessment:</strong> Fractures, dislocations, and ligament injuries commonly occur in the limbs. Knowledge of bone anatomy is essential for accurate diagnosis.</li>
+    <li><strong>Orthopedic Care:</strong> Understanding the appendicular skeleton helps in casting, surgical interventions, and joint replacement procedures.</li>
+    <li><strong>Rehabilitation & Physiotherapy:</strong> Effective rehabilitation programs require detailed knowledge of muscles, bones, and joint mechanics.</li>
+</ul>
+
+<hr>
+
+<h3>3. Disease Diagnosis</h3>
+<ul>
+    <li><strong>Bone Disorders:</strong> Conditions like osteoporosis, arthritis, and congenital deformities affect limb function.</li>
+    <li><strong>Musculoskeletal Disorders:</strong> Helps diagnose issues such as carpal tunnel syndrome, shoulder impingement, and hip dysplasia.</li>
+</ul>
+
+<hr>
+
+<h3>4. Medical Procedures</h3>
+<ul>
+    <li><strong>Intravenous Access & Injections:</strong> Bone landmarks guide safe administration of IV lines and injections.</li>
+    <li><strong>Surgical Landmarks:</strong> Bone anatomy helps surgeons navigate during minimally invasive and orthopedic surgeries.</li>
+</ul>
+
+<hr>
+
+<h3>5. Sports Medicine & Injury Prevention</h3>
+<p>
+Understanding limb mechanics and joint stress helps prevent injuries and design effective exercise programs.
+</p>
+
+<hr>
+
+<h3>6. Education and Research</h3>
+<p>
+The appendicular skeleton forms the foundation for advanced studies in anatomy, orthopedics, physiotherapy, and biomechanics.  
+It is essential for research in prosthetics, implants, and rehabilitation technologies.
+</p>
+
+<hr>
+
+<h3>7. Conclusion</h3>
+<p>
+Knowledge of the appendicular skeleton is vital for patient care, injury management, rehabilitation, and medical research.  
+It connects theoretical knowledge with practical application, making it indispensable in healthcare.
+</p>
+
                     </div>
                 </div>
             </div>
@@ -341,10 +701,10 @@ window.addEventListener('load', () => {
 
     // Image placeholders for image-only tabs (SVG data URIs ensure a visible placeholder).
     const IMAGE_URLS = {
-        'introduction': './model/skeleton.png',
+        'introduction': './model/ske.jpg',
         'pectoral-girdle': './model/Scapula-intro-front-1.jpg',
         'upper-limb': './model/Form-Ortho-Bones.jpg',
-        'pelvic-girdle': './model/pelvic_girdle.png',
+        'pelvic-girdle': ['./model/pel.jpg', './model/pel2.png'],
         'lower-limb': './model/Screenshot (6).png'
     };
 
@@ -465,11 +825,29 @@ window.addEventListener('load', () => {
                 diagramArea.style.width = '100%';
             }
 
-            // attach image
+            // attach image(s) - handle both single image and array of images
             const src = IMAGE_URLS[section] || '';
-            if(imgEl){
-                imgEl.src = src;
-                imgEl.style.display = src ? 'block' : 'none';
+            const img2El = document.getElementById('content-diagram-2');
+            
+            if(Array.isArray(src)){
+                // Multiple images (like pelvic-girdle)
+                if(imgEl){
+                    imgEl.src = src[0] || '';
+                    imgEl.style.display = src[0] ? 'block' : 'none';
+                }
+                if(img2El){
+                    img2El.src = src[1] || '';
+                    img2El.style.display = src[1] ? 'block' : 'none';
+                }
+            } else {
+                // Single image
+                if(imgEl){
+                    imgEl.src = src;
+                    imgEl.style.display = src ? 'block' : 'none';
+                }
+                if(img2El){
+                    img2El.style.display = 'none';
+                }
             }
 
             // ensure renderer hidden
