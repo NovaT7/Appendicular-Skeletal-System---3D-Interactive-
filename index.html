@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Appendicular Skeletal System - 3D Interactive</title>
+
+    <!-- THREE.js and GLTFLoader (must load BEFORE your code) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+
+
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            color:#333; min-height:100vh;
+        }
+        .container { max-width:1400px; margin:0 auto; padding:20px; }
+        header { text-align:center; color:white; padding:30px 0; margin-bottom:30px; }
+        header h1 { font-size:2.5em; margin-bottom:10px; text-shadow:2px 2px 4px rgba(0,0,0,0.3); }
+        header p { font-size:1.1em; opacity:0.95; }
+
+        .tabs { display:flex; justify-content:center; gap:10px; margin-bottom:30px; flex-wrap:wrap; }
+        .tab {
+            background:white; border:none; padding:12px 26px; font-size:1.05em; font-weight:600;
+            cursor:pointer; border-radius:10px; transition:all .25s; box-shadow:0 4px 6px rgba(0,0,0,0.1);
+        }
+        .tab:hover { transform:translateY(-3px); }
+        .tab.active { background:#667eea; color:white; }
+
+        .content-wrapper {
+            display:grid; grid-template-columns:1fr 1fr; gap:20px;
+            background:white; border-radius:15px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        #canvas-container { position:relative; min-height:600px; background:#f8f9fa; }
+        .loading {
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            font-size:1.2em; color:#667eea; font-weight:700;
+        }
+        .loading.error { color:#e74c3c; }
+
+        .controls-info {
+            position:absolute; bottom:10px; left:10px; background:rgba(255,255,255,0.92);
+            padding:10px 15px; border-radius:8px; font-size:0.9em; color:#555;
+        }
+
+        .info-panel { padding:30px; overflow-y:auto; max-height:600px; color:#333; }
+        .info-panel h2 { color:#667eea; margin-bottom:12px; font-size:1.6em; }
+        .info-panel h3 { color:#764ba2; margin-top:18px; margin-bottom:8px; font-size:1.1em; }
+        .info-panel ul { list-style-position:inside; line-height:1.8; color:#555; }
+        .info-panel li { margin-bottom:8px; }
+
+        .section-content { display:none; }
+        .section-content.active { display:block; }
+
+        @media (max-width:968px) {
+            .content-wrapper { grid-template-columns:1fr; }
+            #canvas-container { height:420px; }
+            .info-panel { max-height:none; }
+            header h1 { font-size:1.8em; }
+        }
+        /* -------- WEBSITE LOADER -------- */
+#pageLoader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f9ff; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#pageLoader p {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #234f9d;
+}
+
+/* Loading Circle Animation */
+.loader-circle {
+    width: 55px;
+    height: 55px;
+    border: 5px solid #c7d9f5;
+    border-top-color: #234f9d;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+#introScreen {
+  position: fixed; top:0; left:0; width:100%; height:100%; background:#000;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  z-index:9999; overflow:hidden;
+}
+#introCanvas {
+  position:absolute; width:100%; height:100%; top:0; left:0;
+}
+.introText {
+  position:relative; color:#fff; text-align:center; opacity:0;
+  animation: fadeInText 2.5s ease forwards 1s;
+}
+.introText h1 {
+  font-size:3em; letter-spacing:2px; margin:0;
+}
+.introText p {
+  font-size:1.2em; margin-top:10px; opacity:0.8;
+}
+@keyframes fadeInText {
+  from { opacity:0; transform: translateY(30px); }
+  to { opacity:1; transform: translateY(0); }
+}
+#introScreen.fadeOut {
+  opacity:0; pointer-events:none; transition: opacity 1s ease;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hello Everyone, I am Pratyush</h1>
+            <h1>🦴 Appendicular Skeletal System</h1>
+            <p>Interactive 3D Anatomy Explorer</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" data-section="introduction">Introduction</button>
+            <button class="tab" data-section="pectoral-girdle">Pectoral Girdle</button>
+            <button class="tab" data-section="upper-limb">Upper Limb</button>
+            <button class="tab" data-section="pelvic-girdle">Pelvic Girdle</button>
+            <button class="tab" data-section="lower-limb">Lower Limb</button>
+            <button class="tab" data-section="relevance">Relevance in health care</button>
+        </div>
+
+        <div class="content-wrapper">
+            <div id="canvas-container">
+                <div class="loading">Loading 3D Model...</div>
+
+                <!-- Visuals area (left column of the page). It is split 50/50: model-area (left) and diagram-area (right).
+                     Place your diagram image at: ./model/introduction_diagram.png (or change the path in IMAGE_URLS).
+                     Example absolute path: c:\\Users\\paula\\Desktop\\bunty\\model\\introduction_diagram.png -->
+                <div id="visuals" style="display:flex; width:100%; height:100%;">
+                    <div id="model-area" style="width:50%; height:100%; position:relative; background:#f8f9fa;"></div>
+                    <div id="diagram-area" style="width:50%; height:100%; display:flex; align-items:center; justify-content:center; background:#ffffff;">
+                        <img id="content-diagram" alt="Diagram" style="display:none; width:100%; height:100%; object-fit:contain;" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <!-- Diagram image for Introduction and image-only sections -->
+                <!-- Place your uploaded diagram image at: ./model/introduction_diagram.png -->
+                <!-- Example path on your machine: c:\\Users\\paula\\Desktop\\bunty\\model\\introduction_diagram.png -->
+
+                <!-- Introduction info (text for the 3D model view) -->
+                <div class="section-content active" id="introduction-info">
+                    <h2>Introduction — 3D Model</h2>
+                    <p>This view shows the full 3D model. Use the mouse to rotate, zoom and pan. Other tabs display related images or text.</p>
+                </div>
+
+                <!-- Pectoral Girdle (Image-only) -->
+                <div class="section-content" id="pectoral-girdle-info">
+                    <h2>Pectoral Girdle</h2>
+                    <p>The pectoral (shoulder) girdle connects the upper limb to the trunk and allows a wide range of motion.</p>
+                </div>
+                <!-- Upper Limb (Image-only) -->
+                <div class="section-content" id="upper-limb-info">
+                    <h2>Upper Limb</h2>
+                    <p>The upper limb provides mobility and dexterity for manipulation and interaction with the environment.</p>
+                </div>
+
+                <!-- Pelvic Girdle (Image-only) -->
+                <div class="section-content" id="pelvic-girdle-info">
+                    <h2>Pelvic Girdle</h2>
+                    <p>The pelvic girdle supports weight transfer from the axial skeleton to the lower limbs and provides attachment for muscles.</p>
+                </div>
+
+                <!-- Lower Limb (Image-only) -->
+                <div class="section-content" id="lower-limb-info">
+                    <h2>Lower Limb</h2>
+                    <p>The lower limb is specialized for weight bearing, locomotion, and maintaining balance.</p>
+                </div>
+
+                <!-- Relevance in health care (text-only) -->
+                <div class="section-content" id="relevance-info">
+                    <div class="relevance-box" style="background:#fff; padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08);">
+                    <h2>Relevance in Health Care</h2>
+                    <p>The skeletal system (and each of its parts) has direct clinical relevance across many areas of health care. Here are a few examples and considerations:</p>
+                    <ul>
+                        <li><strong>Orthopedics:</strong> Diagnosis and treatment of fractures, deformities, degenerative diseases, and traumatic injuries.</li>
+                        <li><strong>Rehabilitation:</strong> Restoration of function after injury or surgery via physiotherapy and occupational therapy.</li>
+                        <li><strong>Imaging:</strong> Radiography, CT, and MRI are essential tools for assessing bone integrity and planning interventions.</li>
+                        <li><strong>Surgical Planning:</strong> 3D models and imaging improve preoperative planning and patient education.</li>
+                        <li><strong>Education:</strong> Anatomical models (2D images, 3D models) are vital for training clinicians and students.</li>
+                    </ul>
+                    <p>This section intentionally contains only text (no images or 3D models) as requested.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="introScreen">
+  <canvas id="introCanvas"></canvas>
+  <div class="introText">
+    <h1>Welcome to the <br> Appendicular Skeletal System</h1>
+    <p>Interactive 3D Anatomy Explorer</p>
+  </div>
+</div>
+
+
+
+    <!-- ============ SCRIPT ============ -->
+    <script>
+        // Starfield effect
+const canvas = document.getElementById('introCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function initStars(count) {
+  stars = [];
+  for (let i=0; i< count; i++) {
+    stars.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      z: Math.random()*canvas.width,
+      o: Math.random()
+    });
+  }
+}
+initStars(300);
+
+function drawStars() {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.z -= 2;
+    if (s.z <= 0) {
+      s.z = canvas.width;
+      s.x = Math.random()*canvas.width;
+      s.y = Math.random()*canvas.height;
+      s.o = Math.random();
+    }
+    const px = (s.x - canvas.width/2) * (canvas.width / s.z) + canvas.width/2;
+    const py = (s.y - canvas.height/2) * (canvas.width / s.z) + canvas.height/2;
+    const size = canvas.width / s.z;
+    ctx.fillStyle = `rgba(255,255,255,${s.o})`;
+    ctx.fillRect(px, py, size, size);
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// Hide intro after delay & start main site
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('introScreen').classList.add('fadeOut');
+    // optional: remove the element after fade to allow scroll
+    setTimeout(() => {
+      document.getElementById('introScreen').style.display = 'none';
+    }, 1000);
+  }, 3000); // show intro for 3 seconds
+});
+
+    // CONFIG
+    // Only the 'introduction' tab uses a 3D model. Other tabs will show images or text.
+    const MODEL_URLS = {
+        'introduction': './model/skeleton.glb'
+    };
+
+    // Image placeholders for image-only tabs (SVG data URIs ensure a visible placeholder).
+    const IMAGE_URLS = {
+        'introduction': './model/skeleton.png',
+        'pectoral-girdle': './model/pectoral_girdle.png',
+        'upper-limb': './model/upper_limb.png',
+        'pelvic-girdle': './model/pelvic_girdle.png',
+        'lower-limb': './model/lower_limb.png'
+    };
+
+    // GLOBALS
+    let scene, camera, renderer, currentModel, currentSection = 'introduction';
+    let isDragging = false;
+
+    // INIT
+    function init(){
+        const container = document.getElementById('canvas-container');
+        const modelArea = document.getElementById('model-area');
+
+        // Scene & Camera
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xf8f9fa);
+
+        camera = new THREE.PerspectiveCamera(45, modelArea.clientWidth / modelArea.clientHeight, 0.1, 1000);
+        camera.position.set(0,0,5);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({ antialias:true });
+        renderer.setSize(modelArea.clientWidth, modelArea.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+        modelArea.appendChild(renderer.domElement);
+
+        // Lights
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambient);
+        const d1 = new THREE.DirectionalLight(0xffffff, 0.8); d1.position.set(5,5,5); scene.add(d1);
+        const d2 = new THREE.DirectionalLight(0xffffff, 0.4); d2.position.set(-5,-5,-5); scene.add(d2);
+
+        // Controls + Load initial
+        setupControls();
+        loadModelWithCheck(currentSection);
+
+        // Resize
+        window.addEventListener('resize', onResize);
+
+        // Start
+        animate();
+    }
+
+    // Controls (basic)
+    function setupControls(){
+        const canvas = renderer.domElement;
+        let prev = { x:0, y:0 }, right = false;
+
+        canvas.addEventListener('mousedown', e=>{
+            isDragging = true;
+            right = e.button === 2;
+            prev = { x: e.clientX, y: e.clientY };
+        });
+
+        canvas.addEventListener('mousemove', e=>{
+            if(!isDragging || !currentModel) return;
+            const dx = e.clientX - prev.x;
+            const dy = e.clientY - prev.y;
+
+            if(right){
+                camera.position.x -= dx * 0.01;
+                camera.position.y += dy * 0.01;
+            } else {
+                currentModel.rotation.y += dx * 0.01;
+                currentModel.rotation.x += dy * 0.01;
+            }
+
+            prev = { x: e.clientX, y: e.clientY };
+        });
+
+        canvas.addEventListener('mouseup', ()=> isDragging = false);
+        canvas.addEventListener('mouseleave', ()=> isDragging = false);
+        canvas.addEventListener('contextmenu', e=> e.preventDefault());
+
+        canvas.addEventListener('wheel', e=>{
+            e.preventDefault();
+            camera.position.z += e.deltaY * 0.01;
+            camera.position.z = Math.max(1, Math.min(12, camera.position.z));
+        });
+    }
+
+    // Load model but first check the URL (gives clearer errors for 404/CORS)
+    async function loadModelWithCheck(section){
+        const loadingEl = document.querySelector('.loading');
+        const imgEl = document.getElementById('content-diagram');
+        const wrapper = document.querySelector('.content-wrapper');
+        const canvasContainer = document.getElementById('canvas-container');
+        const infoPanel = document.querySelector('.info-panel');
+        const modelArea = document.getElementById('model-area');
+        const diagramArea = document.getElementById('diagram-area');
+
+        // default hide loading
+        loadingEl.style.display = 'none';
+
+        // RELEVANCE: full-width text, hide visuals
+        if(section === 'relevance'){
+            if(renderer && renderer.domElement) renderer.domElement.style.display = 'none';
+            if(imgEl) imgEl.style.display = 'none';
+            canvasContainer.style.display = 'none';
+            wrapper.style.gridTemplateColumns = '1fr';
+            infoPanel.style.display = 'block';
+            // ensure model area hidden
+            if(modelArea) modelArea.style.display = 'none';
+            if(diagramArea) diagramArea.style.display = 'none';
+            return;
+        }
+
+        // For sections with image + text (including pectoral, upper-limb, pelvic, lower-limb):
+        // show left visuals area (50%) and right text (50%). Inside visuals, show diagram full-width and hide model.
+        if(section !== 'introduction'){
+            // show visuals and info panel
+            canvasContainer.style.display = 'block';
+            wrapper.style.gridTemplateColumns = '1fr 1fr';
+            infoPanel.style.display = 'block';
+
+            // hide model area and show diagram area full-width
+            if(modelArea) modelArea.style.display = 'none';
+            if(diagramArea){
+                diagramArea.style.display = 'flex';
+                diagramArea.style.width = '100%';
+            }
+
+            // attach image
+            const src = IMAGE_URLS[section] || '';
+            if(imgEl){
+                imgEl.src = src;
+                imgEl.style.display = src ? 'block' : 'none';
+            }
+
+            // ensure renderer hidden
+            if(renderer && renderer.domElement) renderer.domElement.style.display = 'none';
+            return;
+        }
+
+        // INTRODUCTION: visuals split 50/50 inside left column (model-area and diagram-area), right column is text
+        canvasContainer.style.display = 'block';
+        wrapper.style.gridTemplateColumns = '1fr 1fr';
+        infoPanel.style.display = 'block';
+
+        // show both model and diagram areas side-by-side
+        if(modelArea){ modelArea.style.display = 'block'; modelArea.style.width = '50%'; }
+        if(diagramArea){ diagramArea.style.display = 'flex'; diagramArea.style.width = '50%'; }
+
+        // set diagram image
+        if(imgEl){
+            const src = IMAGE_URLS['introduction'] || '';
+            imgEl.src = src;
+            imgEl.style.display = src ? 'block' : 'none';
+        }
+
+        // show renderer and ensure it is appended inside modelArea
+        if(renderer && renderer.domElement){
+            renderer.domElement.style.display = 'block';
+            // if not already inside modelArea, append it
+            if(renderer.domElement.parentElement !== modelArea){
+                // remove from old parent if present
+                try { renderer.domElement.remove(); } catch(e){}
+                modelArea.appendChild(renderer.domElement);
+            }
+        }
+
+        // ensure sizes are updated
+        onResize();
+
+        loadingEl.classList.remove('error');
+        loadingEl.style.display = 'block';
+        loadingEl.textContent = 'Checking model...';
+
+        const url = MODEL_URLS[section];
+        console.log('Attempting to load model:', url);
+
+        try {
+            const res = await fetch(url, { method:'HEAD' });
+            if (!res.ok) {
+                console.warn('HEAD check failed, trying GET for more info...');
+                const getRes = await fetch(url);
+                if(!getRes.ok) throw new Error(`HTTP ${getRes.status} ${getRes.statusText}`);
+            }
+        } catch (err) {
+            console.error('Model file check failed:', err);
+            loadingEl.classList.add('error');
+            loadingEl.textContent = '❌ Model file not found or blocked (check path or server).';
+            return;
+        }
+
+        loadingEl.textContent = 'Loading 3D Model...';
+        if (currentModel) {
+            try { scene.remove(currentModel); } catch(e){/* ignore */ }
+            currentModel = null;
+        }
+
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            url,
+            (gltf) => {
+                currentModel = gltf.scene || gltf.scenes?.[0];
+                if(!currentModel){
+                    console.error('GLTF loaded but no scene found:', gltf);
+                    document.querySelector('.loading').classList.add('error');
+                    document.querySelector('.loading').textContent = '❌ Model loaded but contains no scene.';
+                    return;
+                }
+
+                const box = new THREE.Box3().setFromObject(currentModel);
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = maxDim > 0 ? 3 / maxDim : 1;
+                currentModel.scale.setScalar(scale);
+
+                const center = box.getCenter(new THREE.Vector3()).multiplyScalar(scale);
+                currentModel.position.sub(center);
+
+                scene.add(currentModel);
+                document.querySelector('.loading').style.display = 'none';
+                // update sizes after model added
+                onResize();
+                console.log('Model loaded successfully');
+            },
+            (xhr) => {
+                if(xhr && xhr.total) {
+                    const pct = Math.round((xhr.loaded / xhr.total) * 100);
+                    document.querySelector('.loading').textContent = `Loading... ${pct}%`;
+                } else {
+                    document.querySelector('.loading').textContent = 'Loading...';
+                }
+            },
+            (err) => {
+                console.error('GLTFLoader error:', err);
+                const el = document.querySelector('.loading');
+                el.classList.add('error');
+                el.textContent = '❌ Error loading model (see console).';
+            }
+        );
+    }
+
+    function animate(){
+        requestAnimationFrame(animate);
+        if(currentModel && !isDragging) currentModel.rotation.y += 0.002;
+        renderer.render(scene, camera);
+    }
+
+    function onResize(){
+        const modelArea = document.getElementById('model-area');
+        if(!modelArea || !renderer) return;
+        camera.aspect = Math.max(1, modelArea.clientWidth) / Math.max(1, modelArea.clientHeight);
+        camera.updateProjectionMatrix();
+        renderer.setSize(modelArea.clientWidth, modelArea.clientHeight);
+    }
+
+    // Tab switching (keeps info content)
+    document.querySelectorAll('.tab').forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+            const section = tab.dataset.section;
+            document.querySelectorAll('.tab').forEach(t=> t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.section-content').forEach(s=> s.classList.remove('active'));
+            document.getElementById(section + '-info').classList.add('active');
+
+            currentSection = section;
+            loadModelWithCheck(section);
+        });
+    });
+
+    // Start everything
+    window.addEventListener('DOMContentLoaded', init);
+    /* -------- REMOVE LOADER WHEN PAGE IS READY -------- */
+window.onload = () => {
+    setTimeout(() => {
+        document.getElementById("pageLoader").classList.add("hide");
+    }, 300); // small delay for smooth effect
+};
+
+    </script>
+</body>
+</html>
